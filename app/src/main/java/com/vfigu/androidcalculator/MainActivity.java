@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private boolean isOpPressed = false;
+    private boolean isEnterPressed = false;
     private double firstNumber = 0;
     private double secondNumber = 0;
     private int secondNumberIndex = 0;
@@ -176,8 +177,9 @@ public class MainActivity extends AppCompatActivity
     public void appendNumber(TextView calculatorScreen, String number) {
         String calculatorContent = calculatorScreen.getText().toString();
         int length = calculatorContent.length();
-        if(!isOpPressed){
+        if(!isOpPressed && isEnterPressed){
            calculatorScreen.setText(number);
+           isEnterPressed = false;
         }
         else if(length == 1 && calculatorContent.charAt(0) == '0'){
            calculatorScreen.setText(number);
@@ -238,6 +240,7 @@ public class MainActivity extends AppCompatActivity
 
                     calculatorScreen.setText(String.valueOf(secondNumber));
                     isOpPressed = false;
+                    isEnterPressed = true;
                 }
             }
         }
