@@ -52,9 +52,6 @@ public class MainActivity extends AppCompatActivity
         final Button button8 = findViewById(R.id.button8);
         final Button button9 = findViewById(R.id.button9);
         final Button buttonAdd = findViewById(R.id.buttonAdd);
-        final Button buttonBackspace = findViewById(R.id.buttonBackspace);
-        final Button buttonC = findViewById(R.id.buttonC);
-        final Button buttonCE = findViewById(R.id.buttonCE);
         final Button buttonDecimal = findViewById(R.id.buttonDecimal);
         final Button buttonDivide = findViewById(R.id.buttonDivide);
         final Button buttonEquals = findViewById(R.id.buttonEquals);
@@ -70,30 +67,41 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 final int id = view.getId();
-                switch (id){
+                switch (id) {
                     case R.id.button0:
+                        calculatorScreen.append("0");
                         break;
                     case R.id.button1:
+                        calculatorScreen.append("1");
                         break;
                     case R.id.button2:
+                        calculatorScreen.append("2");
                         break;
                     case R.id.button3:
+                        calculatorScreen.append("3");
                         break;
                     case R.id.button4:
+                        calculatorScreen.append("4");
                         break;
                     case R.id.button5:
+                        calculatorScreen.append("5");
                         break;
                     case R.id.button6:
+                        calculatorScreen.append("6");
                         break;
                     case R.id.button7:
+                        calculatorScreen.append("7");
                         break;
                     case R.id.button8:
+                        calculatorScreen.append("8");
                         break;
                     case R.id.button9:
+                        calculatorScreen.append("9");
                         break;
                     case R.id.buttonAdd:
                         break;
                     case R.id.buttonBackspace:
+                        calculatorScreen.getText().toString();
                         break;
                     case R.id.buttonC:
                         break;
@@ -133,9 +141,6 @@ public class MainActivity extends AppCompatActivity
         button8.setOnClickListener(calculatorListener);
         button9.setOnClickListener(calculatorListener);
         buttonAdd.setOnClickListener(calculatorListener);
-        buttonBackspace.setOnClickListener(calculatorListener);
-        buttonC.setOnClickListener(calculatorListener);
-        buttonCE.setOnClickListener(calculatorListener);
         buttonDecimal.setOnClickListener(calculatorListener);
         buttonDivide.setOnClickListener(calculatorListener);
         buttonEquals.setOnClickListener(calculatorListener);
@@ -146,6 +151,22 @@ public class MainActivity extends AppCompatActivity
         buttonSign.setOnClickListener(calculatorListener);
         buttonSquared.setOnClickListener(calculatorListener);
         buttonSubtract.setOnClickListener(calculatorListener);
+
+        final Button buttonBackspace = findViewById(R.id.buttonBackspace);
+        buttonBackspace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String displayedNumbers = calculatorScreen.getText().toString();
+                int length = displayedNumbers.length();
+                if (length > 1) {
+                    displayedNumbers = displayedNumbers.substring(0, length - 1);
+                    calculatorScreen.setText(displayedNumbers);
+                }
+                else {
+                    calculatorScreen.setText("0");
+                }
+            }
+        });
     }
 
     @Override
