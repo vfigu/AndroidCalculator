@@ -26,6 +26,12 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private boolean isOpPressed = false;
+    private double firstNumber = 0;
+    private double secondNumber = 0;
+    private int secondNumberIndex = 0;
+    private String currentOp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +58,8 @@ public class MainActivity extends AppCompatActivity
         final Button button8 = findViewById(R.id.button8);
         final Button button9 = findViewById(R.id.button9);
         final Button buttonAdd = findViewById(R.id.buttonAdd);
+        final Button buttonBackspace = findViewById(R.id.buttonBackspace);
+        final Button buttonCE = findViewById(R.id.buttonCE);
         final Button buttonDecimal = findViewById(R.id.buttonDecimal);
         final Button buttonDivide = findViewById(R.id.buttonDivide);
         final Button buttonEquals = findViewById(R.id.buttonEquals);
@@ -69,53 +77,59 @@ public class MainActivity extends AppCompatActivity
                 final int id = view.getId();
                 switch (id) {
                     case R.id.button0:
-                        calculatorScreen.append("0");
+                        appendNumber(calculatorScreen,"0");
                         break;
                     case R.id.button1:
-                        calculatorScreen.append("1");
+                        appendNumber(calculatorScreen,"1");
                         break;
                     case R.id.button2:
-                        calculatorScreen.append("2");
+                        appendNumber(calculatorScreen,"2");
                         break;
                     case R.id.button3:
-                        calculatorScreen.append("3");
+                        appendNumber(calculatorScreen,"3");
                         break;
                     case R.id.button4:
-                        calculatorScreen.append("4");
+                        appendNumber(calculatorScreen,"4");
                         break;
                     case R.id.button5:
-                        calculatorScreen.append("5");
+                        appendNumber(calculatorScreen,"5");
                         break;
                     case R.id.button6:
-                        calculatorScreen.append("6");
+                        appendNumber(calculatorScreen,"6");
                         break;
                     case R.id.button7:
-                        calculatorScreen.append("7");
+                        appendNumber(calculatorScreen,"7");
                         break;
                     case R.id.button8:
-                        calculatorScreen.append("8");
+                        appendNumber(calculatorScreen,"8");
                         break;
                     case R.id.button9:
-                        calculatorScreen.append("9");
+                        appendNumber(calculatorScreen,"9");
                         break;
                     case R.id.buttonAdd:
+                        function(calculatorScreen,"＋");
                         break;
                     case R.id.buttonBackspace:
-                        calculatorScreen.getText().toString();
+                        backspace(calculatorScreen);
                         break;
                     case R.id.buttonC:
                         break;
                     case R.id.buttonCE:
+                        calculatorScreen.setText("0");
                         break;
                     case R.id.buttonDecimal:
+                        calculatorScreen.append(".");
                         break;
                     case R.id.buttonDivide:
+                        function(calculatorScreen,"÷");
                         break;
                     case R.id.buttonEquals:
+                        compute(calculatorScreen);
                         break;
                     case R.id.buttonInverse:
                         break;
                     case R.id.buttonMultiply:
+                        function(calculatorScreen,"╳");
                         break;
                     case R.id.buttonPercent:
                         break;
@@ -124,8 +138,10 @@ public class MainActivity extends AppCompatActivity
                     case R.id.buttonSign:
                         break;
                     case R.id.buttonSquared:
+                        calculatorScreen.append(".");
                         break;
                     case R.id.buttonSubtract:
+                        function(calculatorScreen,"—");
                         break;
                 }
             }
@@ -141,6 +157,8 @@ public class MainActivity extends AppCompatActivity
         button8.setOnClickListener(calculatorListener);
         button9.setOnClickListener(calculatorListener);
         buttonAdd.setOnClickListener(calculatorListener);
+        buttonBackspace.setOnClickListener(calculatorListener);
+        buttonCE.setOnClickListener(calculatorListener);
         buttonDecimal.setOnClickListener(calculatorListener);
         buttonDivide.setOnClickListener(calculatorListener);
         buttonEquals.setOnClickListener(calculatorListener);
@@ -152,23 +170,95 @@ public class MainActivity extends AppCompatActivity
         buttonSquared.setOnClickListener(calculatorListener);
         buttonSubtract.setOnClickListener(calculatorListener);
 
-        final Button buttonBackspace = findViewById(R.id.buttonBackspace);
-        buttonBackspace.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String displayedNumbers = calculatorScreen.getText().toString();
-                int length = displayedNumbers.length();
-                if (length > 1) {
-                    displayedNumbers = displayedNumbers.substring(0, length - 1);
-                    calculatorScreen.setText(displayedNumbers);
-                }
-                else {
-                    calculatorScreen.setText("0");
-                }
-            }
-        });
+
     }
 
+    public void appendNumber(TextView calculatorScreen, String number) {
+        String calculatorContent = calculatorScreen.getText().toString();
+        int length = calculatorContent.length();
+        if(!isOpPressed){
+           calculatorScreen.setText(number);
+        }
+        else if(length == 1 && calculatorContent.charAt(0) == '0'){
+           calculatorScreen.setText(number);
+        }
+        else{
+            calculatorScreen.append(number);
+        }
+    }
+    public void function(TextView calculatorScreen, String symbol) {
+        String calculatorContent = calculatorScreen.getText().toString();
+        int length = calculatorContent.length();
+        if (length > 1) {
+            if(calculatorContent.charAt(length-1) == ' '){
+                calculatorContent = calculatorContent.substring(0, length - 3);
+            }
+            else if(calculatorContent.charAt(length-1) == '.'){
+                calculatorScreen.append("0");
+            }
+            else if(isOpPressed){
+                compute(calculatorScreen);
+            }
+        }
+        firstNumber = Double.parseDouble(calculatorContent);
+
+        currentOp = symbol;
+
+        if(!symbol.equals(".")){
+            symbol = ' ' + symbol + ' ';
+            secondNumberIndex = calculatorContent.length()+3;
+            isOpPressed = true;
+        }
+        calculatorContent += symbol;
+        calculatorScreen.setText(calculatorContent);
+    }
+
+    public void compute(TextView calculatorScreen){
+        if(isOpPressed){
+            String calculatorContent = calculatorScreen.getText().toString();
+
+            int length = calculatorContent.length();
+            if (length > 1) {
+                if (calculatorContent.charAt(length - 1) != ' ') {
+                    String secondNumberString = calculatorContent.substring(secondNumberIndex, length);
+                    secondNumber = Double.parseDouble(secondNumberString);
+
+                    if (currentOp.equals("＋")) {
+                        secondNumber += firstNumber;
+                    }
+                    if (currentOp.equals("—")) {
+                        secondNumber = firstNumber - secondNumber;
+                    }
+                    if (currentOp.equals("╳")) {
+                        secondNumber *= firstNumber;
+                    }
+                    if (currentOp.equals("÷")) {
+                        secondNumber = firstNumber / secondNumber;
+                    }
+
+                    calculatorScreen.setText(String.valueOf(secondNumber));
+                    isOpPressed = false;
+                }
+            }
+        }
+    }
+
+    public void backspace(TextView calculatorScreen) {
+        String calculatorContent = calculatorScreen.getText().toString();
+        int length = calculatorContent.length();
+        if (length > 1) {
+            if(calculatorContent.charAt(length-1) == ' '){
+                calculatorContent = calculatorContent.substring(0, length - 3);
+            }
+            else{
+                calculatorContent = calculatorContent.substring(0, length - 1);
+            }
+            calculatorScreen.setText(calculatorContent);
+        }
+        else {
+            calculatorScreen.setText("0");
+        }
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
