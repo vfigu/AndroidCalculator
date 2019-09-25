@@ -20,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,6 +39,113 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        final TextView calculatorScreen = findViewById(R.id.calculatorScreen);
+        final Button button0 = findViewById(R.id.button0);
+        final Button button1 = findViewById(R.id.button1);
+        final Button button2 = findViewById(R.id.button2);
+        final Button button3 = findViewById(R.id.button3);
+        final Button button4 = findViewById(R.id.button4);
+        final Button button5 = findViewById(R.id.button5);
+        final Button button6 = findViewById(R.id.button6);
+        final Button button7 = findViewById(R.id.button7);
+        final Button button8 = findViewById(R.id.button8);
+        final Button button9 = findViewById(R.id.button9);
+        final Button buttonAdd = findViewById(R.id.buttonAdd);
+        final Button buttonBackspace = findViewById(R.id.buttonBackspace);
+        final Button buttonC = findViewById(R.id.buttonC);
+        final Button buttonCE = findViewById(R.id.buttonCE);
+        final Button buttonDecimal = findViewById(R.id.buttonDecimal);
+        final Button buttonDivide = findViewById(R.id.buttonDivide);
+        final Button buttonEquals = findViewById(R.id.buttonEquals);
+        final Button buttonInverse = findViewById(R.id.buttonInverse);
+        final Button buttonMultiply = findViewById(R.id.buttonMultiply);
+        final Button buttonPercent = findViewById(R.id.buttonPercent);
+        final Button buttonRoot = findViewById(R.id.buttonRoot);
+        final Button buttonSign = findViewById(R.id.buttonSign);
+        final Button buttonSquared = findViewById(R.id.buttonSquared);
+        final Button buttonSubtract = findViewById(R.id.buttonSubtract);
+
+        final View.OnClickListener calculatorListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final int id = view.getId();
+                switch (id){
+                    case R.id.button0:
+                        break;
+                    case R.id.button1:
+                        break;
+                    case R.id.button2:
+                        break;
+                    case R.id.button3:
+                        break;
+                    case R.id.button4:
+                        break;
+                    case R.id.button5:
+                        break;
+                    case R.id.button6:
+                        break;
+                    case R.id.button7:
+                        break;
+                    case R.id.button8:
+                        break;
+                    case R.id.button9:
+                        break;
+                    case R.id.buttonAdd:
+                        break;
+                    case R.id.buttonBackspace:
+                        break;
+                    case R.id.buttonC:
+                        break;
+                    case R.id.buttonCE:
+                        break;
+                    case R.id.buttonDecimal:
+                        break;
+                    case R.id.buttonDivide:
+                        break;
+                    case R.id.buttonEquals:
+                        break;
+                    case R.id.buttonInverse:
+                        break;
+                    case R.id.buttonMultiply:
+                        break;
+                    case R.id.buttonPercent:
+                        break;
+                    case R.id.buttonRoot:
+                        break;
+                    case R.id.buttonSign:
+                        break;
+                    case R.id.buttonSquared:
+                        break;
+                    case R.id.buttonSubtract:
+                        break;
+                }
+            }
+        };
+        button0.setOnClickListener(calculatorListener);
+        button1.setOnClickListener(calculatorListener);
+        button2.setOnClickListener(calculatorListener);
+        button3.setOnClickListener(calculatorListener);
+        button4.setOnClickListener(calculatorListener);
+        button5.setOnClickListener(calculatorListener);
+        button6.setOnClickListener(calculatorListener);
+        button7.setOnClickListener(calculatorListener);
+        button8.setOnClickListener(calculatorListener);
+        button9.setOnClickListener(calculatorListener);
+        buttonAdd.setOnClickListener(calculatorListener);
+        buttonBackspace.setOnClickListener(calculatorListener);
+        buttonC.setOnClickListener(calculatorListener);
+        buttonCE.setOnClickListener(calculatorListener);
+        buttonDecimal.setOnClickListener(calculatorListener);
+        buttonDivide.setOnClickListener(calculatorListener);
+        buttonEquals.setOnClickListener(calculatorListener);
+        buttonInverse.setOnClickListener(calculatorListener);
+        buttonMultiply.setOnClickListener(calculatorListener);
+        buttonPercent.setOnClickListener(calculatorListener);
+        buttonRoot.setOnClickListener(calculatorListener);
+        buttonSign.setOnClickListener(calculatorListener);
+        buttonSquared.setOnClickListener(calculatorListener);
+        buttonSubtract.setOnClickListener(calculatorListener);
     }
 
     @Override

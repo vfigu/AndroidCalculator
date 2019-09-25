@@ -37,6 +37,7 @@
             android:layout_weight="1"
             android:background="#EEEEEF"
             android:text="%"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
@@ -46,6 +47,7 @@
             android:layout_weight="1"
             android:background="#EEEEEF"
             android:text="√"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
@@ -55,6 +57,7 @@
             android:layout_weight="1"
             android:background="#EEEEEF"
             android:text="ⲭ²"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
@@ -64,6 +67,7 @@
             android:layout_weight="1"
             android:background="#EEEEEF"
             android:text="⅟ⲭ"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
     </LinearLayout>
 
@@ -80,6 +84,7 @@
             android:layout_weight="1"
             android:background="#EEEEEF"
             android:text="CE"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
@@ -89,6 +94,7 @@
             android:layout_weight="1"
             android:background="#EEEEEF"
             android:text="C"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
@@ -98,6 +104,7 @@
             android:layout_weight="1"
             android:background="#EEEEEF"
             android:text="⌫"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
@@ -107,6 +114,7 @@
             android:layout_weight="1"
             android:background="#EEEEEF"
             android:text="÷"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
     </LinearLayout>
 
@@ -123,6 +131,7 @@
             android:layout_weight="1"
             android:background="#F8F8F9"
             android:text="7"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
@@ -132,6 +141,7 @@
             android:layout_weight="1"
             android:background="#F8F8F9"
             android:text="8"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
@@ -141,6 +151,7 @@
             android:layout_weight="1"
             android:background="#F8F8F9"
             android:text="9"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
@@ -150,6 +161,7 @@
             android:layout_weight="1"
             android:background="#EEEEEF"
             android:text="╳"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
     </LinearLayout>
 
@@ -166,6 +178,7 @@
             android:layout_weight="1"
             android:background="#F8F8F9"
             android:text="4"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
@@ -175,6 +188,7 @@
             android:layout_weight="1"
             android:background="#F8F8F9"
             android:text="5"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
@@ -184,6 +198,7 @@
             android:layout_weight="1"
             android:background="#F8F8F9"
             android:text="6"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
@@ -192,7 +207,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#EEEEEF"
-            android:text="-"
+            android:text="—"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
     </LinearLayout>
 
@@ -209,6 +225,7 @@
             android:layout_weight="1"
             android:background="#F8F8F9"
             android:text="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
@@ -218,15 +235,17 @@
             android:layout_weight="1"
             android:background="#F8F8F9"
             android:text="2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/button3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#F8F8F9"
             android:text="3"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
@@ -235,7 +254,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#EEEEEF"
-            android:text="+"
+            android:text="＋"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
     </LinearLayout>
 
@@ -252,6 +272,7 @@
             android:layout_weight="1"
             android:background="#EEEEEF"
             android:text="±"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
@@ -261,6 +282,7 @@
             android:layout_weight="1"
             android:background="#F8F8F9"
             android:text="0"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
@@ -270,6 +292,7 @@
             android:layout_weight="1"
             android:background="#EEEEEF"
             android:text="."
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
 
         <Button
@@ -279,6 +302,7 @@
             android:layout_weight="1"
             android:background="#EEEEEF"
             android:text="="
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="25sp" />
     </LinearLayout>
 </LinearLayout>
