@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity
                         special(calculatorScreen, historyList,"ⲭ²");
                         break;
                     case R.id.buttonSubtract:
-                        special(calculatorScreen, historyList,"—");
+                        function(calculatorScreen, historyList,"—");
                         break;
                 }
             }
@@ -284,45 +284,53 @@ public class MainActivity extends AppCompatActivity
                 if(historyItems.equals("No history")){
                     historyItems = "";
                 }
-                historyItems += calculatorContent + " = ";
 
                 switch (currentOp) {
                     case "＋":
                         secondNumber += firstNumber;
+                        historyItems += calculatorContent;
                         break;
                     case "—":
                         secondNumber = firstNumber - secondNumber;
+                        historyItems += calculatorContent;
                         break;
                     case "╳":
                         secondNumber *= firstNumber;
+                        historyItems += calculatorContent;
                         break;
                     case "÷":
                         secondNumber = firstNumber / secondNumber;
+                        historyItems += calculatorContent;
                         break;
                     case "%":
                         firstNumber = Double.parseDouble(calculatorContent);
                         secondNumber = firstNumber/100;
+                        historyItems += calculatorContent + "%";
                         break;
                     case "√":
                         firstNumber = Double.parseDouble(calculatorContent);
                         secondNumber = Math.sqrt(firstNumber);
+                        historyItems += "√" + calculatorContent;
                         break;
                     case "ⲭ²":
                         firstNumber = Double.parseDouble(calculatorContent);
                         secondNumber = firstNumber*firstNumber;
+                        historyItems += calculatorContent + "²";
                         break;
                     case "⅟ⲭ":
                         firstNumber = Double.parseDouble(calculatorContent);
                         secondNumber = 1/firstNumber;
+                        historyItems += "1/" + calculatorContent;
                         break;
                     case "±":
                         firstNumber = Double.parseDouble(calculatorContent);
                         secondNumber = firstNumber*-1;
+                        historyItems += "-(" + calculatorContent + ")";
                         break;
                 }
 
                 String result = String.valueOf(secondNumber);
-                historyItems += result + "\n";
+                historyItems += " = " + result + "\n";
                 calculatorScreen.setText(result);
                 secondNumberIndex = 0;
                 isOpPressed = false;
