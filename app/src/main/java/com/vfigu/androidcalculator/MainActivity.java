@@ -116,10 +116,10 @@ public class MainActivity extends AppCompatActivity
                         backspace(calculatorScreen);
                         break;
                     case R.id.buttonC:
-                        calculatorScreen.setText("0");
+                        reset(calculatorScreen);
                         break;
                     case R.id.buttonCE:
-                        calculatorScreen.setText("0");
+                        reset(calculatorScreen);
                         break;
                     case R.id.buttonDecimal:
                         setDecimal(calculatorScreen);
@@ -139,27 +139,19 @@ public class MainActivity extends AppCompatActivity
                         function(calculatorScreen,"╳");
                         break;
                     case R.id.buttonPercent:
-                        currentOp = "%";
-                        isOpPressed = true;
-                        compute(calculatorScreen);
+                        special(calculatorScreen,"%");
                         break;
                     case R.id.buttonRoot:
-                        currentOp = "√";
-                        isOpPressed = true;
-                        compute(calculatorScreen);
+                        special(calculatorScreen,"√");
                         break;
                     case R.id.buttonSign:
-                        currentOp = "±";
-                        isOpPressed = true;
-                        compute(calculatorScreen);
+                        special(calculatorScreen,"±");
                         break;
                     case R.id.buttonSquared:
-                        currentOp = "ⲭ²";
-                        isOpPressed = true;
-                        compute(calculatorScreen);
+                        special(calculatorScreen,"ⲭ²");
                         break;
                     case R.id.buttonSubtract:
-                        function(calculatorScreen,"—");
+                        special(calculatorScreen,"—");
                         break;
                 }
             }
@@ -192,6 +184,15 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public void reset(TextView calculatorScreen){
+        calculatorScreen.setText("0");
+        isOpPressed = false;
+        isEnterPressed = false;
+        isDecimal = false;
+        firstNumber = 0;
+        secondNumber = 0;
+        secondNumberIndex = 0;
+    }
     public void setDecimal(TextView calculatorScreen){
         String calculatorContent = calculatorScreen.getText().toString();
         int length = calculatorContent.length();
@@ -245,6 +246,7 @@ public class MainActivity extends AppCompatActivity
             }
             else if(isOpPressed){
                 compute(calculatorScreen);
+                calculatorContent = calculatorScreen.getText().toString();
             }
         }
         firstNumber = Double.parseDouble(calculatorContent);
@@ -264,53 +266,63 @@ public class MainActivity extends AppCompatActivity
         calculatorScreen.setText(calculatorContent);
     }
 
+    public void special(TextView calculatorScreen, String symbol){
+        if(isOpPressed){
+            compute(calculatorScreen);
+        }
+        currentOp = symbol;
+        isOpPressed = true;
+        compute(calculatorScreen);
+    }
     public void compute(TextView calculatorScreen){
         if(isOpPressed){
             String calculatorContent = calculatorScreen.getText().toString();
 
             int length = calculatorContent.length();
-                if (calculatorContent.charAt(length - 1) != ' ') {
-                    String secondNumberString = calculatorContent.substring(secondNumberIndex, length);
-                    secondNumber = Double.parseDouble(secondNumberString);
+            if (calculatorContent.charAt(length-1) != ' ') {
+                String secondNumberString = calculatorContent.substring(secondNumberIndex, length);
+                secondNumber = Double.parseDouble(secondNumberString);
 
-                    if (currentOp.equals("＋")) {
+                switch (currentOp) {
+                    case "＋":
                         secondNumber += firstNumber;
-                    }
-                    if (currentOp.equals("—")) {
+                        break;
+                    case "—":
                         secondNumber = firstNumber - secondNumber;
-                    }
-                    if (currentOp.equals("╳")) {
+                        break;
+                    case "╳":
                         secondNumber *= firstNumber;
-                    }
-                    if (currentOp.equals("÷")) {
+                        break;
+                    case "÷":
                         secondNumber = firstNumber / secondNumber;
-                    }
-                    if (currentOp.equals("%")) {
+                        break;
+                    case "%":
                         firstNumber = Double.parseDouble(calculatorContent);
                         secondNumber = firstNumber/100;
-                    }
-                    if (currentOp.equals("√")) {
+                        break;
+                    case "√":
                         firstNumber = Double.parseDouble(calculatorContent);
                         secondNumber = Math.sqrt(firstNumber);
-                    }
-                    if (currentOp.equals("ⲭ²")) {
+                        break;
+                    case "ⲭ²":
                         firstNumber = Double.parseDouble(calculatorContent);
                         secondNumber = firstNumber*firstNumber;
-                    }
-                    if (currentOp.equals("⅟ⲭ")) {
+                        break;
+                    case "⅟ⲭ":
                         firstNumber = Double.parseDouble(calculatorContent);
                         secondNumber = 1/firstNumber;
-                    }
-                    if (currentOp.equals("±")) {
+                        break;
+                    case "±":
                         firstNumber = Double.parseDouble(calculatorContent);
                         secondNumber = firstNumber*-1;
-                    }
+                        break;
+                }
 
-                    calculatorScreen.setText(String.valueOf(secondNumber));
-                    secondNumberIndex = 0;
-                    isOpPressed = false;
-                    isEnterPressed = true;
-                    isDecimal = true;
+                calculatorScreen.setText(String.valueOf(secondNumber));
+                secondNumberIndex = 0;
+                isOpPressed = false;
+                isEnterPressed = true;
+                isDecimal = true;
             }
         }
     }
@@ -325,6 +337,9 @@ public class MainActivity extends AppCompatActivity
                 calculatorContent = calculatorContent.substring(0, length - 3);
             }
             else{
+                if(calculatorContent.charAt(length-1) == '.') {
+                    isDecimal = false;
+                }
                 calculatorContent = calculatorContent.substring(0, length - 1);
             }
             calculatorScreen.setText(calculatorContent);
