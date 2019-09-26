@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity
 
     private boolean isOpPressed = false;
     private boolean isEnterPressed = false;
+    private boolean isDecimal = false;
     private double firstNumber = 0;
     private double secondNumber = 0;
     private int secondNumberIndex = 0;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity
         final Button button9 = findViewById(R.id.button9);
         final Button buttonAdd = findViewById(R.id.buttonAdd);
         final Button buttonBackspace = findViewById(R.id.buttonBackspace);
+        final Button buttonC = findViewById(R.id.buttonC);
         final Button buttonCE = findViewById(R.id.buttonCE);
         final Button buttonDecimal = findViewById(R.id.buttonDecimal);
         final Button buttonDivide = findViewById(R.id.buttonDivide);
@@ -114,12 +116,13 @@ public class MainActivity extends AppCompatActivity
                         backspace(calculatorScreen);
                         break;
                     case R.id.buttonC:
+                        calculatorScreen.setText("0");
                         break;
                     case R.id.buttonCE:
                         calculatorScreen.setText("0");
                         break;
                     case R.id.buttonDecimal:
-                        calculatorScreen.append(".");
+                        setDecimal(calculatorScreen);
                         break;
                     case R.id.buttonDivide:
                         function(calculatorScreen,"÷");
@@ -128,18 +131,32 @@ public class MainActivity extends AppCompatActivity
                         compute(calculatorScreen);
                         break;
                     case R.id.buttonInverse:
+                        currentOp = "⅟ⲭ";
+                        isOpPressed = true;
+                        compute(calculatorScreen);
                         break;
                     case R.id.buttonMultiply:
                         function(calculatorScreen,"╳");
                         break;
                     case R.id.buttonPercent:
+                        currentOp = "%";
+                        isOpPressed = true;
+                        compute(calculatorScreen);
                         break;
                     case R.id.buttonRoot:
+                        currentOp = "√";
+                        isOpPressed = true;
+                        compute(calculatorScreen);
                         break;
                     case R.id.buttonSign:
+                        currentOp = "±";
+                        isOpPressed = true;
+                        compute(calculatorScreen);
                         break;
                     case R.id.buttonSquared:
-                        calculatorScreen.append(".");
+                        currentOp = "ⲭ²";
+                        isOpPressed = true;
+                        compute(calculatorScreen);
                         break;
                     case R.id.buttonSubtract:
                         function(calculatorScreen,"—");
@@ -159,6 +176,7 @@ public class MainActivity extends AppCompatActivity
         button9.setOnClickListener(calculatorListener);
         buttonAdd.setOnClickListener(calculatorListener);
         buttonBackspace.setOnClickListener(calculatorListener);
+        buttonC.setOnClickListener(calculatorListener);
         buttonCE.setOnClickListener(calculatorListener);
         buttonDecimal.setOnClickListener(calculatorListener);
         buttonDivide.setOnClickListener(calculatorListener);
@@ -174,6 +192,33 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public void setDecimal(TextView calculatorScreen){
+        String calculatorContent = calculatorScreen.getText().toString();
+        int length = calculatorContent.length();
+        String secondNumberString = calculatorContent.substring(secondNumberIndex, length);
+        int secondLength = secondNumberString.length();
+
+        if(!isDecimal){
+            if(secondNumberIndex > 0 && secondLength <= 0){
+                calculatorScreen.append("0");
+            }
+            calculatorScreen.append(".");
+            isDecimal = true;
+        }
+        else if (isEnterPressed){
+            calculatorScreen.setText("0.");
+            isEnterPressed = false;
+        }
+        else if(secondNumberIndex > 0){
+            if(secondNumberString.charAt(0) == ' '){
+                calculatorScreen.append("0.");
+            }
+            else if(secondNumberIndex > 0 && !isDecimal){
+                calculatorScreen.append(".");
+                isDecimal = true;
+            }
+        }
+    }
     public void appendNumber(TextView calculatorScreen, String number) {
         String calculatorContent = calculatorScreen.getText().toString();
         int length = calculatorContent.length();
@@ -196,7 +241,7 @@ public class MainActivity extends AppCompatActivity
                 calculatorContent = calculatorContent.substring(0, length - 3);
             }
             else if(calculatorContent.charAt(length-1) == '.'){
-                calculatorScreen.append("0");
+                calculatorContent += "0";
             }
             else if(isOpPressed){
                 compute(calculatorScreen);
@@ -211,6 +256,10 @@ public class MainActivity extends AppCompatActivity
             secondNumberIndex = calculatorContent.length()+3;
             isOpPressed = true;
         }
+
+
+        isEnterPressed = false;
+        isDecimal = false;
         calculatorContent += symbol;
         calculatorScreen.setText(calculatorContent);
     }
@@ -220,7 +269,6 @@ public class MainActivity extends AppCompatActivity
             String calculatorContent = calculatorScreen.getText().toString();
 
             int length = calculatorContent.length();
-            if (length > 1) {
                 if (calculatorContent.charAt(length - 1) != ' ') {
                     String secondNumberString = calculatorContent.substring(secondNumberIndex, length);
                     secondNumber = Double.parseDouble(secondNumberString);
@@ -237,14 +285,37 @@ public class MainActivity extends AppCompatActivity
                     if (currentOp.equals("÷")) {
                         secondNumber = firstNumber / secondNumber;
                     }
+                    if (currentOp.equals("%")) {
+                        firstNumber = Double.parseDouble(calculatorContent);
+                        secondNumber = firstNumber/100;
+                    }
+                    if (currentOp.equals("√")) {
+                        firstNumber = Double.parseDouble(calculatorContent);
+                        secondNumber = Math.sqrt(firstNumber);
+                    }
+                    if (currentOp.equals("ⲭ²")) {
+                        firstNumber = Double.parseDouble(calculatorContent);
+                        secondNumber = firstNumber*firstNumber;
+                    }
+                    if (currentOp.equals("⅟ⲭ")) {
+                        firstNumber = Double.parseDouble(calculatorContent);
+                        secondNumber = 1/firstNumber;
+                    }
+                    if (currentOp.equals("±")) {
+                        firstNumber = Double.parseDouble(calculatorContent);
+                        secondNumber = firstNumber*-1;
+                    }
 
                     calculatorScreen.setText(String.valueOf(secondNumber));
+                    secondNumberIndex = 0;
                     isOpPressed = false;
                     isEnterPressed = true;
-                }
+                    isDecimal = true;
             }
         }
     }
+
+
 
     public void backspace(TextView calculatorScreen) {
         String calculatorContent = calculatorScreen.getText().toString();
