@@ -7,6 +7,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import android.view.View;
 
+import androidx.appcompat.view.menu.MenuView;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         final TextView calculatorScreen = findViewById(R.id.calculatorScreen);
+        final TextView historyList = findViewById(R.id.historyList);
         final Button button0 = findViewById(R.id.button0);
         final Button button1 = findViewById(R.id.button1);
         final Button button2 = findViewById(R.id.button2);
@@ -110,7 +112,7 @@ public class MainActivity extends AppCompatActivity
                         appendNumber(calculatorScreen,"9");
                         break;
                     case R.id.buttonAdd:
-                        function(calculatorScreen,"＋");
+                        function(calculatorScreen, historyList,"＋");
                         break;
                     case R.id.buttonBackspace:
                         backspace(calculatorScreen);
@@ -125,33 +127,31 @@ public class MainActivity extends AppCompatActivity
                         setDecimal(calculatorScreen);
                         break;
                     case R.id.buttonDivide:
-                        function(calculatorScreen,"÷");
+                        function(calculatorScreen, historyList,"÷");
                         break;
                     case R.id.buttonEquals:
-                        compute(calculatorScreen);
+                        compute(calculatorScreen, historyList);
                         break;
                     case R.id.buttonInverse:
-                        currentOp = "⅟ⲭ";
-                        isOpPressed = true;
-                        compute(calculatorScreen);
+                        special(calculatorScreen, historyList,"⅟ⲭ");
                         break;
                     case R.id.buttonMultiply:
-                        function(calculatorScreen,"╳");
+                        function(calculatorScreen, historyList,"╳");
                         break;
                     case R.id.buttonPercent:
-                        special(calculatorScreen,"%");
+                        special(calculatorScreen, historyList,"%");
                         break;
                     case R.id.buttonRoot:
-                        special(calculatorScreen,"√");
+                        special(calculatorScreen, historyList,"√");
                         break;
                     case R.id.buttonSign:
-                        special(calculatorScreen,"±");
+                        special(calculatorScreen, historyList,"±");
                         break;
                     case R.id.buttonSquared:
-                        special(calculatorScreen,"ⲭ²");
+                        special(calculatorScreen, historyList,"ⲭ²");
                         break;
                     case R.id.buttonSubtract:
-                        special(calculatorScreen,"—");
+                        special(calculatorScreen, historyList,"—");
                         break;
                 }
             }
@@ -180,8 +180,6 @@ public class MainActivity extends AppCompatActivity
         buttonSign.setOnClickListener(calculatorListener);
         buttonSquared.setOnClickListener(calculatorListener);
         buttonSubtract.setOnClickListener(calculatorListener);
-
-
     }
 
     public void reset(TextView calculatorScreen){
@@ -234,7 +232,7 @@ public class MainActivity extends AppCompatActivity
             calculatorScreen.append(number);
         }
     }
-    public void function(TextView calculatorScreen, String symbol) {
+    public void function(TextView calculatorScreen, TextView historyList, String symbol) {
         String calculatorContent = calculatorScreen.getText().toString();
         int length = calculatorContent.length();
         if (length > 1) {
@@ -245,7 +243,7 @@ public class MainActivity extends AppCompatActivity
                 calculatorContent += "0";
             }
             else if(isOpPressed){
-                compute(calculatorScreen);
+                compute(calculatorScreen, historyList);
                 calculatorContent = calculatorScreen.getText().toString();
             }
         }
@@ -266,22 +264,27 @@ public class MainActivity extends AppCompatActivity
         calculatorScreen.setText(calculatorContent);
     }
 
-    public void special(TextView calculatorScreen, String symbol){
+    public void special(TextView calculatorScreen, TextView historyList, String symbol){
         if(isOpPressed){
-            compute(calculatorScreen);
+            compute(calculatorScreen, historyList);
         }
         currentOp = symbol;
         isOpPressed = true;
-        compute(calculatorScreen);
+        compute(calculatorScreen, historyList);
     }
-    public void compute(TextView calculatorScreen){
+    public void compute(TextView calculatorScreen, TextView historyList){
         if(isOpPressed){
             String calculatorContent = calculatorScreen.getText().toString();
+            String historyItems = historyList.getText().toString();
 
             int length = calculatorContent.length();
             if (calculatorContent.charAt(length-1) != ' ') {
                 String secondNumberString = calculatorContent.substring(secondNumberIndex, length);
                 secondNumber = Double.parseDouble(secondNumberString);
+                if(historyItems.equals("No history")){
+                    historyItems = "";
+                }
+                historyItems += calculatorContent + " = ";
 
                 switch (currentOp) {
                     case "＋":
@@ -318,11 +321,14 @@ public class MainActivity extends AppCompatActivity
                         break;
                 }
 
-                calculatorScreen.setText(String.valueOf(secondNumber));
+                String result = String.valueOf(secondNumber);
+                historyItems += result + "\n";
+                calculatorScreen.setText(result);
                 secondNumberIndex = 0;
                 isOpPressed = false;
                 isEnterPressed = true;
                 isDecimal = true;
+                historyList.setText(historyItems);
             }
         }
     }
@@ -372,10 +378,7 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -386,19 +389,6 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
